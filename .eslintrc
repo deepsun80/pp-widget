@@ -1,0 +1,36 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "rules": {
+    "no-unused-vars": 0,
+    "no-undef" :0,
+    "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "react/jsx-no-target-blank": 0,
+    "import/no-extraneous-dependencies": 0,
+    "react/react-in-jsx-scope": 0,
+    "react/forbid-prop-types": 0,
+    "no-nested-ternary": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "no-shadow": 0,
+    "react/no-array-index-key": 0,
+    "no-class-assign": 0,
+    "no-prototype-builtins": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "func-names": 0,
+    "react/no-did-update-set-state": 0,
+    "no-console": 0,
+    "no-plusplus": 0,
+    "camelcase": 0,
+    "class-methods-use-this": 0,
+    "import/no-named-as-default": 0,
+    "no-param-reassign": 0,
+    "no-underscore-dangle": 0,
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ]
+  }
+}
