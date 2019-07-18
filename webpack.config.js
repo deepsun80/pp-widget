@@ -2,7 +2,7 @@
 const webpack = require("webpack");
 const path = require("path");
 
-const libraryName = "pp-widget";
+const libraryName = "ppWidget";
 
 const config = {
   entry: `${__dirname}/src/index.js`,
@@ -34,8 +34,7 @@ const config = {
     })
   ],
   devServer: {
-    contentBase: "./dist",
-    hot: true
+    contentBase: "./dist"
   }
 };
 

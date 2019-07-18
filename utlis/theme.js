@@ -39,9 +39,10 @@ const theme = createMuiTheme({
       contrastText: "#fff"
     },
     background: {
-      default: "#f8f8f8"
+      paper: "#f8f8f8"
     }
   },
+  shadows: "#000",
   overrides: {
     MuiFab: {
       extended: {

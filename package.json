@@ -1,11 +1,11 @@
 {
   "name": "paypossible-widget",
   "version": "1.0.0",
-  "description": "paypossible widget",
+  "description": "Paypossible Widget Application",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config ./webpack.config.js --mode production",
-    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "build": "webpack --config ./webpack.config.js",
+    "start": "webpack-dev-server --config ./webpack.config.js",
     "test": "echo \"No test specified\" && exit 0",
     "fix": "eslint --fix .",
     "lint": "eslint ."
@@ -25,17 +25,23 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.2",
     "prettier": "^1.18.2",
-    "react-hot-loader": "^4.11.1",
     "webpack": "^4.34.0",
     "webpack-cli": "^3.3.4",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.7.2",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "dependencies": {
     "@material-ui/core": "^4.2.1",
     "clsx": "^1.0.4",
+    "contentful": "^7.8.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-form": "^8.2.4",
+    "redux-thunk": "^2.3.0"
   },
   "repository": {
     "type": "git",
