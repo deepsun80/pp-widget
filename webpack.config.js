@@ -1,27 +1,14 @@
 /* eslint-disable prefer-destructuring */
 const webpack = require("webpack");
 const path = require("path");
-const env = require("yargs").argv.env;
 
 const libraryName = "pp-widget";
 
-let outputFile;
-let mode;
-
-if (env === "build") {
-  mode = "production";
-  outputFile = `${libraryName}.min.js`;
-} else {
-  mode = "development";
-  outputFile = `${libraryName}.js`;
-}
-
 const config = {
-  mode,
   entry: `${__dirname}/src/index.js`,
   output: {
     path: `${__dirname}/dist`,
-    filename: outputFile,
+    filename: `${libraryName}.min.js`,
     library: libraryName,
     libraryTarget: "umd",
     umdNamedDefine: true
