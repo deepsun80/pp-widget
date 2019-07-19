@@ -1,10 +1,12 @@
 /* eslint-disable prefer-destructuring */
 const webpack = require("webpack");
 const path = require("path");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const libraryName = "ppWidget";
 
 const config = {
+  mode: process.env.NODE_ENV === "production" ? "production" : "development",
   entry: `${__dirname}/src/index.js`,
   output: {
     path: `${__dirname}/dist`,
@@ -19,6 +21,10 @@ const config = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ["babel-loader", "eslint-loader"]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ["file-loader"]
       }
     ]
   },
@@ -33,6 +39,14 @@ const config = {
       exclude: ["vendor/*.js"]
     })
   ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new UglifyJsPlugin({
+        include: /\.min\.js$/
+      })
+    ]
+  },
   devServer: {
     contentBase: "./dist"
   }

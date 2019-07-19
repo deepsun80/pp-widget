@@ -1,44 +1,31 @@
+import React from "react";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
 
-const RenderTextField = ({
-  input,
-  label,
-  meta: { touched, error },
-  className,
-  ...custom
-}) => (
-  <div className={className}>
-    <TextField
-      id="outlined-textarea"
-      variant="outlined"
-      fullWidth
-      label={label}
-      error={touched && error}
-      {...input}
-      {...custom}
-    />
-    <Typography variant="subtitle2" align="center" color="error">
-      {touched && error}
-    </Typography>
-  </div>
+const RenderTextField = ({ input, label, ...custom }) => (
+  <TextField
+    id="outlined-textarea"
+    variant="outlined"
+    fullWidth
+    label={label}
+    {...input}
+    {...custom}
+  />
 );
 
 const RenderCheckbox = ({ input, label }) => (
   <Checkbox label={label} checked={!!input.value} onCheck={input.onChange} />
 );
 
-const RenderRadioGroup = ({ input, className, ...custom }) => (
+const RenderRadioGroup = ({ input, ...custom }) => (
   <RadioGroup
     {...input}
     {...custom}
     valueselected={input.value}
     onChange={(event, value) => input.onChange(value)}
-    className={className}
   />
 );
 
@@ -49,19 +36,14 @@ const RenderSelectField = ({
   children,
   ...custom
 }) => (
-  <div>
-    <Select
-      floatingLabelText={label}
-      error={touched && error}
-      {...input}
-      onChange={(event, index, value) => input.onChange(value)}
-      {...children}
-      {...custom}
-    />
-    <Typography variant="subtitle2" align="center" color="error">
-      {touched && error}
-    </Typography>
-  </div>
+  <Select
+    floatingLabelText={label}
+    error={touched && error}
+    {...input}
+    onChange={(event, index, value) => input.onChange(value)}
+    {...children}
+    {...custom}
+  />
 );
 
 RenderTextField.defaultProps = {
@@ -73,7 +55,6 @@ RenderTextField.propTypes = {
   input: PropTypes.any.isRequired,
   label: PropTypes.string,
   meta: PropTypes.any.isRequired,
-  className: PropTypes.any.isRequired,
   custom: PropTypes.any
 };
 
@@ -98,7 +79,6 @@ RenderRadioGroup.propTypes = {
   input: PropTypes.any.isRequired,
   label: PropTypes.string,
   onChange: PropTypes.func,
-  className: PropTypes.any.isRequired,
   custom: PropTypes.any
 };
 

@@ -42,11 +42,10 @@ const theme = createMuiTheme({
       paper: "#f8f8f8"
     }
   },
-  shadows: "#000",
   overrides: {
     MuiFab: {
       extended: {
-        padding: "0 25px"
+        padding: "0 55px"
       }
     },
     MuiInput: {
@@ -78,34 +77,19 @@ const theme = createMuiTheme({
     },
     MuiTypography: {
       h1: {
-        fontSize: pxToRem(28),
-        [breakpoints.up("md")]: {
-          fontSize: pxToRem(40)
-        }
+        fontSize: pxToRem(28)
       },
       h2: {
-        fontSize: pxToRem(26),
-        [breakpoints.up("md")]: {
-          fontSize: pxToRem(36)
-        }
+        fontSize: pxToRem(26)
       },
       h3: {
-        fontSize: pxToRem(24),
-        [breakpoints.up("md")]: {
-          fontSize: pxToRem(32)
-        }
+        fontSize: pxToRem(24)
       },
       h4: {
-        fontSize: pxToRem(22),
-        [breakpoints.up("md")]: {
-          fontSize: pxToRem(28)
-        }
+        fontSize: pxToRem(22)
       },
       h5: {
-        fontSize: pxToRem(20),
-        [breakpoints.up("md")]: {
-          fontSize: pxToRem(24)
-        }
+        fontSize: pxToRem(20)
       },
       h6: {
         fontSize: pxToRem(18)
