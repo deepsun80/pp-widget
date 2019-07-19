@@ -40,7 +40,7 @@ const App = () => {
   return (
     <div>
       <div onClick={handleOpen} className={classes.ppWidget}>
-        <Button />
+        Pay with Paypossible
       </div>
       <Dialog
         aria-labelledby="simple-dialog-title"
