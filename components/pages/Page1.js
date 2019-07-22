@@ -36,7 +36,12 @@ const Page1 = ({ error }) => {
         label="PayPossible ID"
       />
       {error && (
-        <Typography variant="caption" color="error" align="center">
+        <Typography
+          variant="caption"
+          color="error"
+          align="center"
+          display="block"
+        >
           {error}
         </Typography>
       )}

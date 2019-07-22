@@ -5,6 +5,19 @@ const useStyles = makeStyles(theme => ({
     cursor: "pointer",
     display: "inline"
   },
+  backButton: {
+    backgroundColor: "transparent",
+    color: theme.palette.secondary.light,
+    border: `2px solid ${theme.palette.secondary.light}`,
+    padding: "0 30px",
+    height: 30,
+    fontSize: "0.8em",
+    transition: "all 0.3s",
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.light,
+      color: "#fff"
+    }
+  },
   dialog: {
     backgroundColor: theme.palette.background.paper
   },

@@ -107,17 +107,6 @@ class Wizard extends React.Component {
                 Next
               </Fab>
             )}
-            {page > 0 && (
-              <Fab
-                variant="extended"
-                size="small"
-                aria-label="Submit"
-                onClick={this.previous}
-                style={styles.backButton}
-              >
-                Back
-              </Fab>
-            )}
           </form>
         )}
       </Form>

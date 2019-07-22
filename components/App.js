@@ -5,9 +5,10 @@ import Dialog from "@material-ui/core/Dialog";
 import Fab from "@material-ui/core/Fab";
 import Wizard from "./Wizard";
 import { Page1, Page2 } from "./pages";
-import Button from "./Button";
 import useStyles from "./styles";
 import Merchant from "../api";
+import Button from "./Button";
+import getEntry from "../utlis/contentful";
 
 const onSubmit = async values => {
   console.log(values);
@@ -19,6 +20,15 @@ const App = () => {
   const [open, setOpen] = React.useState(false);
   const [wizard, setWizard] = React.useState(1);
   const [error, setError] = React.useState("");
+  const [logo, setLogo] = React.useState(null);
+
+  React.useEffect(() => {
+    async function fetchContentfulEntry() {
+      const websiteInfo = await getEntry("generalSettings");
+      setLogo(websiteInfo.fields.logoSmall.fields.file.url);
+    }
+    fetchContentfulEntry();
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -31,6 +41,7 @@ const App = () => {
   const getMerchant = async values => {
     try {
       const response = await Merchant.search(values.payId);
+      console.log(response);
       setWizard(2);
     } catch (error) {
       setError("Please enter a valid Paypossible ID");
@@ -40,7 +51,7 @@ const App = () => {
   return (
     <div>
       <div onClick={handleOpen} className={classes.ppWidget}>
-        Pay with Paypossible
+        <Button logo={logo} />
       </div>
       <Dialog
         aria-labelledby="simple-dialog-title"
@@ -52,11 +63,7 @@ const App = () => {
         scroll="body"
       >
         <div className={classes.dialogHeader}>
-          <img
-            alt="Paypossible Logo"
-            title="Paypossible Logo"
-            src={require("../utlis/payPossibleLogo.png")}
-          />
+          <img alt="Paypossible Logo" title="Paypossible Logo" src={logo} />
           <button
             type="button"
             className={classes.close}
@@ -78,8 +85,8 @@ const App = () => {
                 <Page2 />
               </Wizard>
               <Fab
+                className={classes.backButton}
                 variant="extended"
-                size="small"
                 aria-label="Submit"
                 onClick={() => setWizard(1)}
               >

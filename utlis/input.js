@@ -29,16 +29,9 @@ const RenderRadioGroup = ({ input, ...custom }) => (
   />
 );
 
-const RenderSelectField = ({
-  input,
-  label,
-  meta: { touched, error },
-  children,
-  ...custom
-}) => (
+const RenderSelectField = ({ input, label, children, ...custom }) => (
   <Select
     floatingLabelText={label}
-    error={touched && error}
     {...input}
     onChange={(event, index, value) => input.onChange(value)}
     {...children}
@@ -85,9 +78,8 @@ RenderRadioGroup.propTypes = {
 RenderSelectField.propTypes = {
   input: PropTypes.any.isRequired,
   label: PropTypes.string.isRequired,
-  meta: PropTypes.any.isRequired,
   children: PropTypes.any.isRequired,
   custom: PropTypes.any.isRequired
 };
 
-export { RenderTextField, RenderRadioGroup };
+export { RenderTextField, RenderRadioGroup, RenderSelectField };

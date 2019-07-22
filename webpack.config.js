@@ -10,7 +10,7 @@ const config = {
   entry: `${__dirname}/src/index.js`,
   output: {
     path: `${__dirname}/dist`,
-    filename: `${libraryName}.js`,
+    filename: `${libraryName}.min.js`,
     library: libraryName,
     libraryTarget: "umd",
     umdNamedDefine: true
@@ -39,6 +39,9 @@ const config = {
       exclude: ["vendor/*.js"]
     })
   ],
+  optimization: {
+    minimizer: [new UglifyJsPlugin()]
+  },
   devServer: {
     contentBase: "./dist"
   }
