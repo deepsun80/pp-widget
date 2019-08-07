@@ -2,6 +2,8 @@
 const webpack = require("webpack");
 const path = require("path");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 const libraryName = "ppWidget";
 
@@ -36,15 +38,35 @@ const config = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.SourceMapDevToolPlugin({
       filename: "[file].map",
-      exclude: ["vendor/*.js"]
+      exclude: ["node_modules.ppWidget.min.js", "vendor/*.js"]
     })
   ],
   optimization: {
-    minimizer: [new UglifyJsPlugin()]
+    namedChunks: true,
+    minimize: true,
+    minimizer: [new UglifyJsPlugin()],
+    splitChunks: {
+      cacheGroups: {
+        node_vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "node_modules",
+          chunks: "all"
+        }
+      }
+    }
   },
   devServer: {
-    contentBase: "./dist"
+    hot: true,
+    contentBase: "./dist",
+    port: 5000
   }
 };
 
-module.exports = config;
+module.exports = function(env = {}) {
+  if (env.runAnalyzer) {
+    config.plugins.push(
+      new BundleAnalyzerPlugin({ analyzerMode: "static", openAnalyzer: true })
+    );
+  }
+  return config;
+};

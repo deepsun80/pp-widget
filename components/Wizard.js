@@ -13,7 +13,7 @@ const styles = {
   },
   nextButton: {
     display: "block",
-    margin: "30px auto"
+    margin: "auto"
   }
 };
 
@@ -69,7 +69,7 @@ class Wizard extends React.Component {
         validate={this.validate}
         onSubmit={this.handleSubmit}
       >
-        {({ handleSubmit, submitting, values }) => (
+        {({ handleSubmit, submitting, invalid, values }) => (
           <form onSubmit={handleSubmit}>
             {activePage}
             {!isLastPage && (
@@ -78,6 +78,7 @@ class Wizard extends React.Component {
                 aria-label="Submit"
                 color="secondary"
                 type="submit"
+                disabled={invalid}
                 style={styles.nextButton}
               >
                 Next
@@ -89,7 +90,7 @@ class Wizard extends React.Component {
                 aria-label="Submit"
                 color="secondary"
                 type="submit"
-                disabled={submitting}
+                disabled={invalid || submitting}
                 style={styles.nextButton}
               >
                 Submit
@@ -101,7 +102,7 @@ class Wizard extends React.Component {
                 aria-label="Submit"
                 color="secondary"
                 type="submit"
-                disabled={submitting}
+                disabled={invalid || submitting}
                 style={styles.nextButton}
               >
                 Next

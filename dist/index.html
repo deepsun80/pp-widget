@@ -2,17 +2,40 @@
 <html>
   <head>
     <title>PP Widget</title>
+    <style>
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover, 
+      input:-webkit-autofill:focus
+      input:-webkit-autofill, 
+      textarea:-webkit-autofill,
+      textarea:-webkit-autofill:hover
+      textarea:-webkit-autofill:focus,
+      select:-webkit-autofill,
+      select:-webkit-autofill:hover,
+      select:-webkit-autofill:focus {
+        border:none !important;
+        -webkit-text-fill-color: inherit !important;
+        box-shadow: 0 0 0px 1000px #ffffff inset;
+        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+  </style>
   </head>
   <body>
-    <div style="margin-top: 50vh;">
     </div>
     <div id="ppWidget"></div>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script src="http://krakenjs.com/zoid/dist/zoid.js"></script>
     <script>
-      var s = document.createElement('script'); 
-      s.src = "./ppWidget.min.js";
-      s.async = true;
-      document.body.appendChild(s);
+      function runScript(file) {
+        var s = document.createElement('script'); 
+        s.src = file;
+        s.async = true;
+        document.body.appendChild(s);
+      };
+      runScript("./widget.js");
+      runScript("./ppWidget.min.js");
+      runScript("./node_modules.ppWidget.min.js")
     </script>
   </body>
 </html>

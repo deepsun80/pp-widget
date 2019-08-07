@@ -1,102 +1,139 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
+import { loadCSS } from "fg-loadcss";
 import Fab from "@material-ui/core/Fab";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Wizard from "./Wizard";
+import Steps from "./Steps";
 import { Page1, Page2 } from "./pages";
 import useStyles from "./styles";
 import Merchant from "../api";
-import Button from "./Button";
 import getEntry from "../utlis/contentful";
-
-const onSubmit = async values => {
-  console.log(values);
-};
+import overlay from "../utlis/overlay";
 
 const App = () => {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
   const [wizard, setWizard] = React.useState(1);
   const [error, setError] = React.useState("");
-  const [logo, setLogo] = React.useState(null);
+  const [content, setContent] = React.useState({
+    logo: null,
+    copy: {},
+    isLoaded: false
+  });
+  const [merchant, setMerchant] = React.useState({});
 
   React.useEffect(() => {
     async function fetchContentfulEntry() {
       const websiteInfo = await getEntry("generalSettings");
-      setLogo(websiteInfo.fields.logoSmall.fields.file.url);
+      const customerInfo = await getEntry("customer");
+      setContent({
+        logo: websiteInfo.fields.logoSmall.fields.file.url,
+        copy: customerInfo.fields,
+        isLoaded: true
+      });
     }
+    // window.xprops.backGroundOverlayOn(overlay.style, overlay.text);
+    // window.xprops.clearData();
+    // window.addEventListener("beforeunload", event => {
+    //   event.preventDefault();
+    //   return window.xprops.backGroundOverlayOff();
+    // });
+    loadCSS(
+      "https://use.fontawesome.com/releases/v5.3.1/css/all.css",
+      document.querySelector("#font-awesome-css")
+    );
     fetchContentfulEntry();
   }, []);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const getMerchant = async values => {
-    try {
-      const response = await Merchant.search(values.payId);
-      console.log(response);
+    if (Object.getOwnPropertyNames(values).length === 0) {
       setWizard(2);
-    } catch (error) {
-      setError("Please enter a valid Paypossible ID");
+      setMerchant({});
+    } else {
+      try {
+        const response = await Merchant.search(values.payId);
+        setMerchant(response);
+        setWizard(2);
+      } catch (error) {
+        setError(content.copy.appCopy.application.page1.error);
+      }
     }
   };
 
+  const onSubmit = async values => {
+    let concatValues = {};
+    if (Object.getOwnPropertyNames(merchant).length !== 0) {
+      concatValues = {
+        merchant: {
+          url: merchant.url
+        },
+        ...values
+      };
+    } else concatValues = values;
+    console.log(concatValues);
+    // await window.xprops.displayChildData(values);
+    // await window.xprops.backGroundOverlayOff();
+    // window.close("ppwidget-component");
+  };
+
   return (
-    <div>
-      <div onClick={handleOpen} className={classes.ppWidget}>
-        <Button logo={logo} />
-      </div>
-      <Dialog
-        aria-labelledby="simple-dialog-title"
-        aria-describedby="simple-dialog-description"
-        open={open}
-        className={classes.dialog}
-        fullWidth
-        maxWidth="md"
-        scroll="body"
-      >
-        <div className={classes.dialogHeader}>
-          <img alt="Paypossible Logo" title="Paypossible Logo" src={logo} />
-          <button
-            type="button"
-            className={classes.close}
-            data-dismiss="modal"
-            onClick={() => handleClose()}
-          >
-            &times;
-          </button>
-        </div>
-        <div className={classes.wizard}>
-          {wizard === 1 && (
-            <Wizard onSubmit={getMerchant} initWizard>
-              <Page1 error={error} />
-            </Wizard>
-          )}
-          {wizard === 2 && (
-            <React.Fragment>
-              <Wizard onSubmit={onSubmit}>
-                <Page2 />
-              </Wizard>
-              <Fab
-                className={classes.backButton}
-                variant="extended"
-                aria-label="Submit"
-                onClick={() => setWizard(1)}
-              >
-                Back
-              </Fab>
-            </React.Fragment>
-          )}
-        </div>
-      </Dialog>
-    </div>
+    <React.Fragment>
+      {!content.isLoaded && (
+        <CircularProgress
+          size={70}
+          color="secondary"
+          className={classes.load}
+        />
+      )}
+      {content.isLoaded && (
+        <React.Fragment>
+          <img
+            alt="Paypossible Logo"
+            title="Paypossible Logo"
+            src={content.logo}
+            className={classes.logo}
+          />
+          <div className={classes.wizard}>
+            {wizard === 1 && (
+              <React.Fragment>
+                <Wizard
+                  onSubmit={getMerchant}
+                  initWizard
+                  // initialValues={{ payId: window.xprops.preFillId }}
+                >
+                  <Page1 error={error} {...content.copy} />
+                </Wizard>
+                <div className={classes.stepsSection}>
+                  {content.copy.appCopy.application.page1.steps.map(
+                    (col, key) => (
+                      <Steps {...col} key={key} />
+                    )
+                  )}
+                </div>
+              </React.Fragment>
+            )}
+            {wizard === 2 && (
+              <React.Fragment>
+                <Wizard
+                  onSubmit={onSubmit}
+                  initialValues={{ purpose: merchant.loan_type }}
+                >
+                  <Page2 {...merchant} {...content.copy} />
+                </Wizard>
+                <Fab
+                  className={classes.backButton}
+                  variant="extended"
+                  aria-label="Submit"
+                  onClick={() => setWizard(1)}
+                >
+                  Back
+                </Fab>
+              </React.Fragment>
+            )}
+          </div>
+        </React.Fragment>
+      )}
+    </React.Fragment>
   );
 };
 

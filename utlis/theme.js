@@ -48,16 +48,6 @@ const theme = createMuiTheme({
         padding: "0 55px"
       }
     },
-    MuiInput: {
-      underline: {
-        "&:hover:not($disabled):before": {
-          borderBottom: "2px solid #06d438"
-        },
-        "&:after": {
-          borderBottom: "2px solid #06d438"
-        }
-      }
-    },
     MuiOutlinedInput: {
       notchedOutline: {
         borderRadius: "30px"
@@ -75,24 +65,36 @@ const theme = createMuiTheme({
         }
       }
     },
+    MuiInputLabel: {
+      outlined: {
+        backgroundColor: "#fff"
+      }
+    },
+    MuiSelect: {
+      select: {
+        "&:focus": {
+          backgroundColor: "transparent"
+        }
+      }
+    },
     MuiTypography: {
       h1: {
-        fontSize: pxToRem(28)
+        fontSize: pxToRem(23)
       },
       h2: {
-        fontSize: pxToRem(26)
-      },
-      h3: {
-        fontSize: pxToRem(24)
-      },
-      h4: {
-        fontSize: pxToRem(22)
-      },
-      h5: {
         fontSize: pxToRem(20)
       },
-      h6: {
+      h3: {
         fontSize: pxToRem(18)
+      },
+      h4: {
+        fontSize: pxToRem(16)
+      },
+      h5: {
+        fontSize: pxToRem(14)
+      },
+      h6: {
+        fontSize: pxToRem(14)
       }
     }
   }

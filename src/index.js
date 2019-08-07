@@ -8,7 +8,7 @@ import App from "../components/App";
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <App title="ppWidget" />
+    <App />
   </ThemeProvider>,
   document.getElementById("ppWidget")
 );

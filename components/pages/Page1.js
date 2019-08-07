@@ -6,28 +6,23 @@ import { RenderTextField } from "../../utlis/input";
 import Wizard from "../Wizard";
 import useStyles from "./styles";
 
-const Error = ({ name }) => (
-  <Field
-    name={name}
-    subscribe={{ touched: true, error: true }}
-    render={({ meta: { touched, error } }) =>
-      touched && error ? <span>{error}</span> : null
-    }
-  />
-);
-
-const Page1 = ({ error }) => {
-  console.log(error);
+const Page1 = ({ error, ...copy }) => {
   const classes = useStyles();
+
+  const [pageCopy, setPageCopy] = React.useState({});
+
+  React.useEffect(() => {
+    if (copy.hasOwnProperty("appCopy"))
+      setPageCopy(copy.appCopy.application.page1);
+  }, []);
 
   return (
     <Wizard.Page>
-      <Typography variant="h1" align="center" className={classes.h1}>
-        Welcome to PayPossible
+      <Typography variant="h1" align="center" className={classes.header}>
+        {pageCopy.line1}
       </Typography>
-      <Typography variant="body1" align="center" className={classes.h1}>
-        First, enter the PayPossible ID of the business where you are looking to
-        make a purchase.
+      <Typography variant="body1" align="center" className={classes.header}>
+        {pageCopy.line2}
       </Typography>
       <Field
         name="payId"
@@ -35,17 +30,25 @@ const Page1 = ({ error }) => {
         component={RenderTextField}
         label="PayPossible ID"
       />
+      <Typography
+        variant="body2"
+        align="center"
+        display="block"
+        className={classes.disclaimer}
+      >
+        {pageCopy.line3}
+      </Typography>
       {error && (
         <Typography
           variant="caption"
           color="error"
           align="center"
           display="block"
+          className={classes.error}
         >
           {error}
         </Typography>
       )}
-      <Error name="payId" />
     </Wizard.Page>
   );
 };

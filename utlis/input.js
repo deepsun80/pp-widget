@@ -3,16 +3,21 @@ import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Checkbox from "@material-ui/core/Checkbox";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 
-const RenderTextField = ({ input, label, ...custom }) => (
+const RenderTextField = ({ input, label, ...inputProps }) => (
   <TextField
     id="outlined-textarea"
+    type="tel"
     variant="outlined"
     fullWidth
     label={label}
     {...input}
-    {...custom}
+    {...inputProps}
+    style={{ marginBottom: 30 }}
   />
 );
 
@@ -29,26 +34,35 @@ const RenderRadioGroup = ({ input, ...custom }) => (
   />
 );
 
-const RenderSelectField = ({ input, label, children, ...custom }) => (
-  <Select
-    floatingLabelText={label}
-    {...input}
-    onChange={(event, index, value) => input.onChange(value)}
-    {...children}
-    {...custom}
-  />
+const RenderSelectField = ({
+  name,
+  label,
+  values,
+  onChange,
+  children,
+  input
+}) => (
+  <FormControl variant="outlined" fullWidth style={{ marginBottom: 30 }}>
+    <InputLabel htmlFor={name}>{label}</InputLabel>
+    <Select
+      value={values}
+      onChange={onChange}
+      input={<OutlinedInput name={name} id={name} />}
+      {...input}
+    >
+      {children}
+    </Select>
+  </FormControl>
 );
 
 RenderTextField.defaultProps = {
-  custom: null,
   label: ""
 };
 
 RenderTextField.propTypes = {
   input: PropTypes.any.isRequired,
   label: PropTypes.string,
-  meta: PropTypes.any.isRequired,
-  custom: PropTypes.any
+  meta: PropTypes.any.isRequired
 };
 
 RenderCheckbox.defaultProps = {
@@ -75,11 +89,18 @@ RenderRadioGroup.propTypes = {
   custom: PropTypes.any
 };
 
+RenderSelectField.defaultProps = {
+  name: "",
+  label: ""
+};
+
 RenderSelectField.propTypes = {
+  name: PropTypes.string,
+  label: PropTypes.string,
+  values: PropTypes.any.isRequired,
   input: PropTypes.any.isRequired,
-  label: PropTypes.string.isRequired,
   children: PropTypes.any.isRequired,
-  custom: PropTypes.any.isRequired
+  onChange: PropTypes.func.isRequired
 };
 
 export { RenderTextField, RenderRadioGroup, RenderSelectField };
