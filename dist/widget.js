@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:5000";
+const baseUrl = "https://reverent-pare-9d2d6b.netlify.com";
 
 window.PPWidget = zoid.create({
   tag: "ppwidget-component",

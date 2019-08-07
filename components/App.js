@@ -32,12 +32,12 @@ const App = () => {
         isLoaded: true
       });
     }
-    // window.xprops.backGroundOverlayOn(overlay.style, overlay.text);
-    // window.xprops.clearData();
-    // window.addEventListener("beforeunload", event => {
-    //   event.preventDefault();
-    //   return window.xprops.backGroundOverlayOff();
-    // });
+    window.xprops.backGroundOverlayOn(overlay.style, overlay.text);
+    window.xprops.clearData();
+    window.addEventListener("beforeunload", event => {
+      event.preventDefault();
+      return window.xprops.backGroundOverlayOff();
+    });
     loadCSS(
       "https://use.fontawesome.com/releases/v5.3.1/css/all.css",
       document.querySelector("#font-awesome-css")
@@ -71,9 +71,9 @@ const App = () => {
       };
     } else concatValues = values;
     console.log(concatValues);
-    // await window.xprops.displayChildData(values);
-    // await window.xprops.backGroundOverlayOff();
-    // window.close("ppwidget-component");
+    await window.xprops.displayChildData(values);
+    await window.xprops.backGroundOverlayOff();
+    window.close("ppwidget-component");
   };
 
   return (
@@ -99,7 +99,7 @@ const App = () => {
                 <Wizard
                   onSubmit={getMerchant}
                   initWizard
-                  // initialValues={{ payId: window.xprops.preFillId }}
+                  initialValues={{ payId: window.xprops.preFillId }}
                 >
                   <Page1 error={error} {...content.copy} />
                 </Wizard>
